@@ -18,7 +18,11 @@ class OfferController extends Controller
      */
     public function index()
     {
-        echo "offers";
+        // $offers = Offer::all(); //ata akta way
+        // $offers = Offer::with(['author', 'categories', 'locations'])->get();//ata akta way
+        $offers = Offer::with(['author', 'categories', 'locations'])->paginate(5);//ata akta way
+        // $offers = collect([]);//Not data found check er jonno
+        return view('offers.index',compact('offers'));
     }
 
     /**
