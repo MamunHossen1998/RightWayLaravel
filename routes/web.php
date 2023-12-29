@@ -8,6 +8,7 @@ Route::get('/', function () {
 });
 Route::middleware('auth')->group(function () {
     Route::resource('offers', App\Http\Controllers\OfferController::class)->middleware('auth');
+    Route::get('/MyOffers', [App\Http\Controllers\OfferController::class, 'MyOffers'])->name('offers.MyOffers');
 });
 Auth::routes();
 

@@ -37,11 +37,23 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('offers.index') }}">{{ ('Offers') }}</a>
-                        </li>
-                    </ul>
+                    @if (auth()->user())
+                        @if (auth()->user()->isAdmin())
+                            <ul class="navbar-nav ">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('offers.index') }}">{{ ('Offers') }}</a>
+                                </li>
+                            </ul>    
+                        @else
+                            <ul class="navbar-nav ">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('offers.MyOffers') }}">{{ ('My offers') }}</a>
+                                </li>
+                            </ul>
+                        
+                        @endif
+                        @endif
+                   
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -91,9 +103,11 @@
         </main>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
    
     @stack('script')

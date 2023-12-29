@@ -16,13 +16,56 @@ class OfferController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->query());
+        
         // $offers = Offer::all(); //ata akta way
         // $offers = Offer::with(['author', 'categories', 'locations'])->get();//ata akta way
-        $offers = Offer::with(['author', 'categories', 'locations'])->paginate(5);//ata akta way
+        $query = Offer::with(['author', 'categories', 'locations']); //ata akta way
         // $offers = collect([]);//Not data found check er jonno
-        return view('offers.index',compact('offers'));
+        $categories = Category::orderBy('title')->select('title', 'id')->get();
+        $locations = Location::all();
+        if(request()->query('status')){
+            $query = $query->where('status',request()->query('status'));
+        }
+        if(request()->query('location')){
+            $location = request()->query('location');
+        }
+        if(request()->query('category')){
+            $catetory =request()->query('category');
+        }
+        if(request()->query('title')){
+            $query = $query->where('title',request()->query('title'));
+        }
+        // print_r($query);
+        
+        $offers = $query->paginate(5);
+        return view('offers.index',compact('offers', 'categories', 'locations'));
+    }
+
+    function MyOffers(Request $request){
+        $this->authorize('MyView', Offer::class);
+        $query = Offer::with(['author', 'categories', 'locations']); //ata akta way
+        // $offers = collect([]);//Not data found check er jonno
+        $categories = Category::orderBy('title')->select('title', 'id')->get();
+        $locations = Location::all();
+        if (request()->query('status')) {
+            $query = $query->where('status', request()->query('status'));
+        }
+        if (request()->query('location')) {
+            $location = request()->query('location');
+        }
+        if (request()->query('category')) {
+            $catetory = request()->query('category');
+        }
+        if (request()->query('title')) {
+            $query = $query->where('title', request()->query('title'));
+        }
+        $query = $query->where('author_id', auth()->user()->id);
+        $offers = $query->paginate(5);
+        return view('offers.index', compact('offers', 'categories', 'locations'));
+     
     }
 
     /**
@@ -109,8 +152,9 @@ class OfferController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Offer $offer)
     {
-        //
+        $offer->delete();
+        return response('delete success');
     }
 }

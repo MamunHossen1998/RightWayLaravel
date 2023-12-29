@@ -19,4 +19,8 @@ class OfferPolicy
     {
         return   $user->role === Role::ADMIN || ($user->role === Role::USER && $user->id === $offer->author_id);
     }
+    public function MyView(User $user)
+    {
+        return   $user->role === Role::USER;
+    }
 }

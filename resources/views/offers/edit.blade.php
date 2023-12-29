@@ -11,7 +11,7 @@ use App\Models\Category;
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Create Offers</h4>
+                        <h4>Update Offers</h4>
                     </div>
                     {{-- @if ($errors->all())
                         @foreach ($errors->all() as $error)
