@@ -52,7 +52,7 @@
                             </ul>
                         
                         @endif
-                        @endif
+                    @endif
                    
 
                     <!-- Right Side Of Navbar -->

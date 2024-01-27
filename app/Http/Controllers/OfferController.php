@@ -24,19 +24,25 @@ class OfferController extends Controller
         // $offers = Offer::with(['author', 'categories', 'locations'])->get();//ata akta way
         $query = Offer::with(['author', 'categories', 'locations']); //ata akta way
         // $offers = collect([]);//Not data found check er jonno
-        $categories = Category::orderBy('title')->select('title', 'id')->get();
-        $locations = Location::all();
+        $categories = Category::select('id', 'title')->orderBy('title')->get();
+        $locations = Location::selectRaw('id, title')->get();
+
+        
         if(request()->query('status')){
-            $query = $query->where('status',request()->query('status'));
+            $query->where('status', request()->query('status'));
         }
         if(request()->query('location')){
-            $location = request()->query('location');
+            $location_id = request()->query('location');
+
+            $query->whereHas('locations', function ($q) use ($location_id) {
+                $q->where('location_id', $location_id);
+            });
         }
         if(request()->query('category')){
             $catetory =request()->query('category');
         }
         if(request()->query('title')){
-            $query = $query->where('title',request()->query('title'));
+            $query->where('title', request()->query('title'));
         }
         // print_r($query);
         

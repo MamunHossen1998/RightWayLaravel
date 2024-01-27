@@ -65,6 +65,11 @@
                 <div class="card">
                     <div class="card-header text-center">
                         <h4>Offer list</h4>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('offers.create') }}">New offer create</a></li>
+                            </ol>
+                        </nav>
                     </div>
                     @if ($offers->count() <=0)
                         <div class="text-center">

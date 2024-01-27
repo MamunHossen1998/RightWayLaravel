@@ -15,6 +15,7 @@ class Offer extends Model implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use SoftDeletes;
+    public $timestamps = false;
     protected $fillable = ['title', 'description', 'price', 'status', 'author_id'];
     public const PLACEHOLDER_IMG_PATH = 'image/placeholderimg.jpg';
 
